@@ -1,0 +1,22 @@
+{
+  "contacts": [
+    {
+      "id": 2,
+      "avatar": "https://www.gravatar.com/avatar/753?s=32&d=identicon&r=PG",
+      "name": "Natan",
+      "number": "190"
+    },
+    {
+      "id": 3,
+      "avatar": "https://www.gravatar.com/avatar/607?s=32&d=identicon&r=PG",
+      "name": "Matheus",
+      "number": "190"
+    },
+    {
+      "id": 4,
+      "avatar": "https://www.gravatar.com/avatar/409?s=32&d=identicon&r=PG",
+      "name": "Abella",
+      "number": "660"
+    }
+  ]
+}

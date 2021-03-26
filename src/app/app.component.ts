@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
+import { AppService } from './app.service';
+import { Contact } from './models/contact'
 
-class Contact {
-  constructor(
-    public avatar: string,
-    public name: string,
-    public number: string
-  ) {}
-}
 
 @Component({
   selector: 'app-root',
@@ -16,26 +11,46 @@ class Contact {
 export class AppComponent {
   contacts: Contact[] = []
 
-  newContact = new Contact(null, null, null);
+  newContact = new Contact(null, null, null, null);
 
   enableEdit = false;
 
-  constructor() {
+  constructor(
+    private contactService: AppService
+  ) {
     this.setContacts();
   }
 
   saveContact() {
     this.newContact.avatar = this.generateAvatar();
-    this.contacts.push(this.newContact);
-    this.clear();
+    this.contactService.createContact(this.newContact)
+      .subscribe((response) =>{
+        this.clear();
+        this.setContacts();
+        alert('Contato foi criado!');
+      })
+
   }
 
   deleteContact(contact: Contact) {
-    this.contacts = this.contacts.filter(tempContact => tempContact.name !== contact.name)
-  } 
+    this.contactService.deleteContact(contact.id)
+      .subscribe((response) => {
+        this.setContacts();
+        alert('Contato foi deletado!')
+      })
+  }
+
+  editContact(contact: Contact) {
+    this.contactService.editContact(contact)
+      .subscribe((reponse) => {
+        this.setContacts();
+        this.enableEdit = false;
+        alert('Contato foi editado!')
+      })
+  }
 
   clear() {
-    this.newContact = new Contact(null, null, null)
+    this.newContact = new Contact(null, null, null, null)
   }
 
   changeEditStatus() {
@@ -47,10 +62,9 @@ export class AppComponent {
   }
 
   private setContacts() {
-    this.contacts = [
-      { avatar: this.generateAvatar(), name: 'jose', number: '123'},
-      { avatar: this.generateAvatar(), name: 'joao', number: '456'},
-      { avatar: this.generateAvatar(), name: 'maria', number: '789'},
-    ]
+    this.contactService.getContacts()
+      .subscribe((response: Contact[]) => {
+        this.contacts = response
+      })
   }
 }

@@ -32,7 +32,7 @@
           <ion-button slot="end" (click)="clear()">
             Limpar
           </ion-button>
-  
+
           <ion-button slot="end" (click)="saveContact()">
             Salvar
           </ion-button>
@@ -55,6 +55,9 @@
           </div>
 
           <ion-buttons slot="end">
+            <ion-button slot="icon-only" *ngIf="enableEdit" (click)="editContact(contact)">
+              <ion-icon name="pencil"></ion-icon>
+            </ion-button>
             <ion-button slot="icon-only" color="danger" (click)="deleteContact(contact)">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
